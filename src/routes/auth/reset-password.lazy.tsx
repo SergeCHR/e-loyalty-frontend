@@ -1,5 +1,3 @@
-import { BackButton } from "@/components/ui/back-button";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,10 +5,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+import { BackButton } from "@/components/ui/back-button";
+import { Button } from "@/components/ui/button";
+import { FormEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
-import { FormEvent } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/auth/reset-password")({
+  component: () => <ResetPasswordPage />,
+});
 
 export function ResetPasswordPage() {
   function reset(e: FormEvent<HTMLFormElement>) {

@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,30 +5,35 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Link, createFileRoute } from "@tanstack/react-router";
+
+import { Button } from "@/components/ui/button";
+import { FormEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
-import { ELink } from "@/router/e-link";
-import { FormEvent } from "react";
 
-export function RegisterPage() {
-  function register(e: FormEvent<HTMLFormElement>) {
+export const Route = createFileRoute("/auth/login")({
+  component: () => <LoginPage />,
+});
+
+export function LoginPage() {
+  function logIn(e: FormEvent<HTMLFormElement>) {
     const data = new FormData(e.currentTarget);
     e.preventDefault();
     const email = data.get("email");
     const password = data.get("password");
-    const confirmPassword = data.get("confirm_password");
-    console.log({ email, password, confirmPassword, data });
+    console.log({ email, password, data });
   }
   return (
     <div className="bg-noisy bg-primary w-screen h-screen">
       <MainContentWrapper>
-        <form onSubmit={register}>
+        <form onSubmit={logIn}>
           <Card className="mx-auto max-w-sm">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl font-bold">Register</CardTitle>
+              <CardTitle className="text-2xl font-bold">Login</CardTitle>
               <CardDescription>
-                Enter your email and password to create your account
+                Enter your email below to login to your account
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -45,7 +49,15 @@ export function RegisterPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <div className="flex items-center">
+                    <Label htmlFor="password">Password</Label>
+                    <Link
+                      className="ml-auto inline-block text-sm underline"
+                      to="/auth/reset-password"
+                    >
+                      Forgot your password?
+                    </Link>
+                  </div>
                   <Input
                     id="password"
                     name="password"
@@ -54,25 +66,15 @@ export function RegisterPage() {
                     placeholder="********"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirm_password">Confirm Password</Label>
-                  <Input
-                    id="confirm_password"
-                    name="confirm_password"
-                    required
-                    type="password"
-                    placeholder="********"
-                  />
-                </div>
                 <Button className="w-full" type="submit">
-                  Register
+                  Login
                 </Button>
               </div>
               <div className="mt-4 text-center text-sm">
-                Already have an account?{" "}
-                <ELink className="underline" to="/auth/login">
-                  Sign in
-                </ELink>
+                Don't have an account?{" "}
+                <Link className="underline" to="/auth/register">
+                  Sign up
+                </Link>
               </div>
             </CardContent>
           </Card>

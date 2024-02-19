@@ -60,7 +60,7 @@
 
 @layer utilities {
   .bg-noisy {
-    background-image: url("../public/images/noise-light.png");
+    background-image: url("../images/noise-light.png");
   }
 }
 

@@ -1,12 +1,12 @@
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "@tanstack/react-router";
 
 export const BackButton = () => {
-  const navigate = useNavigate();
+  const { history } = useRouter();
   return (
     <ArrowLeftIcon
       className="fixed z-50 text-white w-8 h-8 left-4 top-4 cursor-pointer"
-      onClick={() => navigate(-1)}
+      onClick={() => history.go(-1)}
     />
   );
 };
