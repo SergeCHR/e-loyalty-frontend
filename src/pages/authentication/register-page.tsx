@@ -12,23 +12,24 @@ import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
 import { ELink } from "@/router/e-link";
 import { FormEvent } from "react";
 
-export function LoginPage() {
-  function logIn(e: FormEvent<HTMLFormElement>) {
+export function RegisterPage() {
+  function register(e: FormEvent<HTMLFormElement>) {
     const data = new FormData(e.currentTarget);
     e.preventDefault();
     const email = data.get("email");
     const password = data.get("password");
-    console.log({ email, password, data });
+    const confirmPassword = data.get("confirm_password");
+    console.log({ email, password, confirmPassword, data });
   }
   return (
     <div className="bg-noisy bg-primary w-screen h-screen">
       <MainContentWrapper>
-        <form onSubmit={logIn}>
+        <form onSubmit={register}>
           <Card className="mx-auto max-w-sm">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl font-bold">Login</CardTitle>
+              <CardTitle className="text-2xl font-bold">Register</CardTitle>
               <CardDescription>
-                Enter your email below to login to your account
+                Enter your email and password to create your account
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -44,15 +45,7 @@ export function LoginPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
-                    <ELink
-                      className="ml-auto inline-block text-sm underline"
-                      to="/auth/reset-password"
-                    >
-                      Forgot your password?
-                    </ELink>
-                  </div>
+                  <Label htmlFor="password">Password</Label>
                   <Input
                     id="password"
                     name="password"
@@ -61,14 +54,24 @@ export function LoginPage() {
                     placeholder="********"
                   />
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirm_password">Confirm Password</Label>
+                  <Input
+                    id="confirm_password"
+                    name="confirm_password"
+                    required
+                    type="password"
+                    placeholder="********"
+                  />
+                </div>
                 <Button className="w-full" type="submit">
-                  Login
+                  Register
                 </Button>
               </div>
               <div className="mt-4 text-center text-sm">
-                Don't have an account?{" "}
-                <ELink className="underline" to="/auth/register">
-                  Sign up
+                Already have an account?{" "}
+                <ELink className="underline" to="/auth/login">
+                  Sign in
                 </ELink>
               </div>
             </CardContent>

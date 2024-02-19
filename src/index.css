@@ -58,6 +58,12 @@
   }
 }
 
+@layer utilities {
+  .bg-noisy {
+    background-image: url("../public/images/noise-light.png");
+  }
+}
+
 * {
   font-family: "Libre Franklin", sans-serif;
 }
