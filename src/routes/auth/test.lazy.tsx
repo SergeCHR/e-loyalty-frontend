@@ -20,14 +20,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
 import { jwtDecode } from "jwt-decode";
-import { toast } from "@/components/ui/use-toast";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import { userApiClient } from "@/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export const Route = createFileRoute("/auth/login")({
+export const Route = createFileRoute("/auth/test")({
   component: () => <LoginPage />,
 });
 
@@ -49,12 +48,6 @@ export function LoginPage() {
       ) {
         navigate({ to: "/dashboard" });
       }
-    },
-    onError: () => {
-      toast({
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
-      });
     },
   });
 

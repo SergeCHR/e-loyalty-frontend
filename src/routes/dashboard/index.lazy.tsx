@@ -1,17 +1,39 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+
+import { Button } from "@/components/ui/button";
+import { SideNavigation } from "@/components/dashboard/side-navigation";
+// import { protectRouteWithRole } from "@/lib/routing";
+// import { useProtected } from "@/services/auth/useProtected";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 export const Route = createFileRoute("/dashboard/")({
-  beforeLoad: ({ context, location }) => {
-    const notAllowed = !context.auth?.isAuthenticated();
-    console.log({ notAllowed });
-    if (notAllowed) {
-      throw redirect({
-        to: "/auth/login",
-        search: {
-          redirect: location.href,
-        },
-      });
-    }
-  },
-  component: () => <div>Welcome to Dashboard</div>,
+  // beforeLoad: protectRouteWithRole("STORE"),
+  component: () => (
+    <SideNavigation>
+      <DashboardPage />
+    </SideNavigation>
+  ),
 });
+
+const DashboardPage = () => {
+  // useProtected({
+  //   role: "STORE",
+  // });
+  const navigate = useNavigate();
+  const signOut = useSignOut();
+  return (
+    <div>
+      <p>Welcome to Dashboard</p>
+      <Button
+        onClick={() => {
+          signOut();
+          navigate({
+            to: "/auth/login",
+          });
+        }}
+      >
+        Sign out
+      </Button>
+    </div>
+  );
+};

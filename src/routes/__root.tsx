@@ -4,17 +4,16 @@ import {
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 
+import { JwtUser } from "@/api/models/user";
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { User } from "@/api/models/user";
 
 type AuthenticationContext = {
-  user: User | null | undefined;
+  user: JwtUser | null | undefined;
   headers: string | null;
-  isAuthenticated: () => boolean;
 };
 
-interface MyRouterContext {
+export interface MyRouterContext {
   auth: AuthenticationContext;
 }
 
@@ -39,9 +38,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
               stroke="currentColor"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
               ></path>
             </svg>

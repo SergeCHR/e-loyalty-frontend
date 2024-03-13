@@ -1,18 +1,22 @@
-import { Link } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
+
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
 
-export function ErrorPage() {
+export const Route = createFileRoute("/not-authenticated")({
+  component: () => <NotAuthenticatedPage />,
+});
+
+const NotAuthenticatedPage = () => {
   return (
     <div className="bg-noisy bg-primary w-screen h-screen">
       <MainContentWrapper>
         <div className="text-center">
-          <h1 className="mb-4 text-9xl font-semibold text-white">404</h1>
+          <h1 className="mb-4 text-9xl font-semibold text-white">Oops...</h1>
           <h2 className="mb-4 text-4xl font-semibold text-white">
-            You have discovered a secret place
+            Unauthorized
           </h2>
           <p className="mb-4 text-lg text-gray-300">
-            Unfortunately, this is only a 404 page. You may have mistyped the
-            address, or the page has been moved to another URL.
+            Unfortunately, you cannot access this page. Try another account.
           </p>
           <div className="animate-bounce">
             <svg
@@ -40,4 +44,4 @@ export function ErrorPage() {
       </MainContentWrapper>
     </div>
   );
-}
+};

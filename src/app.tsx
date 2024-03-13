@@ -4,26 +4,21 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 import AuthProvider from "react-auth-kit";
+import { JwtUser } from "@/api/models/user";
 import ReactDOM from "react-dom/client";
 import { StrictMode } from "react";
 import { Toaster } from "@/components/ui/toaster";
-import { User } from "@/api/models/user";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 import { store } from "@/services/auth/store.ts";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 
 // Create a new router instance
 const router = createRouter({
   routeTree,
   context: {
-    auth: {
-      headers: null,
-      isAuthenticated: () => false,
-      user: undefined,
-    },
+    auth: undefined!,
   },
 });
 
@@ -35,15 +30,12 @@ declare module "@tanstack/react-router" {
 }
 
 function InnerApp() {
-  const user = useAuthUser<User>();
-  const isAuthenticated = useIsAuthenticated();
+  const user = useAuthUser<JwtUser>();
   const headers = useAuthHeader();
   const auth = {
     user,
-    isAuthenticated,
     headers,
   };
-  console.log({ auth });
   return (
     <RouterProvider
       router={router}

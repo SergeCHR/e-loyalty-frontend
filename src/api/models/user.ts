@@ -29,7 +29,7 @@ export const CreateUser = z
     email: z.string().email("Invalid email address"),
     password: z.string().min(8, "Password must be at least 8 characters long"),
     confirmPassword: z.string().min(8, "Confirmation is required"),
-    role: RegularUserRole,
+    userType: RegularUserRole,
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -37,3 +37,16 @@ export const CreateUser = z
   });
 
 export type CreateUser = z.infer<typeof CreateUser>;
+
+export const LoginUser = z.object({
+  email: z.string().email(),
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+});
+export type LoginUser = z.infer<typeof LoginUser>;
+
+export const JwtUser = z.object({
+  username: z.string(),
+  sub: UserId,
+  role: UserRole,
+});
+export type JwtUser = z.infer<typeof JwtUser>;

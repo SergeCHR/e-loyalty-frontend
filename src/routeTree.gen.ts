@@ -16,13 +16,26 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const NotAuthenticatedLazyImport = createFileRoute('/not-authenticated')()
 const IndexLazyImport = createFileRoute('/')()
 const DashboardIndexLazyImport = createFileRoute('/dashboard/')()
+const AuthTestLazyImport = createFileRoute('/auth/test')()
 const AuthResetPasswordLazyImport = createFileRoute('/auth/reset-password')()
 const AuthRegisterLazyImport = createFileRoute('/auth/register')()
 const AuthLoginLazyImport = createFileRoute('/auth/login')()
+const DashboardSettingsIndexLazyImport = createFileRoute(
+  '/dashboard/settings/',
+)()
+const DashboardDocsIndexLazyImport = createFileRoute('/dashboard/docs/')()
 
 // Create/Update Routes
+
+const NotAuthenticatedLazyRoute = NotAuthenticatedLazyImport.update({
+  path: '/not-authenticated',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/not-authenticated.lazy').then((d) => d.Route),
+)
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -35,6 +48,11 @@ const DashboardIndexLazyRoute = DashboardIndexLazyImport.update({
 } as any).lazy(() =>
   import('./routes/dashboard/index.lazy').then((d) => d.Route),
 )
+
+const AuthTestLazyRoute = AuthTestLazyImport.update({
+  path: '/auth/test',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/auth/test.lazy').then((d) => d.Route))
 
 const AuthResetPasswordLazyRoute = AuthResetPasswordLazyImport.update({
   path: '/auth/reset-password',
@@ -53,12 +71,32 @@ const AuthLoginLazyRoute = AuthLoginLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth/login.lazy').then((d) => d.Route))
 
+const DashboardSettingsIndexLazyRoute = DashboardSettingsIndexLazyImport.update(
+  {
+    path: '/dashboard/settings/',
+    getParentRoute: () => rootRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/dashboard/settings/index.lazy').then((d) => d.Route),
+)
+
+const DashboardDocsIndexLazyRoute = DashboardDocsIndexLazyImport.update({
+  path: '/dashboard/docs/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/dashboard/docs/index.lazy').then((d) => d.Route),
+)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
       preLoaderRoute: typeof IndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/not-authenticated': {
+      preLoaderRoute: typeof NotAuthenticatedLazyImport
       parentRoute: typeof rootRoute
     }
     '/auth/login': {
@@ -73,8 +111,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthResetPasswordLazyImport
       parentRoute: typeof rootRoute
     }
+    '/auth/test': {
+      preLoaderRoute: typeof AuthTestLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard/': {
       preLoaderRoute: typeof DashboardIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/docs/': {
+      preLoaderRoute: typeof DashboardDocsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/settings/': {
+      preLoaderRoute: typeof DashboardSettingsIndexLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -84,10 +134,14 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
+  NotAuthenticatedLazyRoute,
   AuthLoginLazyRoute,
   AuthRegisterLazyRoute,
   AuthResetPasswordLazyRoute,
+  AuthTestLazyRoute,
   DashboardIndexLazyRoute,
+  DashboardDocsIndexLazyRoute,
+  DashboardSettingsIndexLazyRoute,
 ])
 
 /* prettier-ignore-end */
