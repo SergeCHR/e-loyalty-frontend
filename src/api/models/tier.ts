@@ -1,3 +1,4 @@
+import { TierId } from "@/api/branded-types";
 import z from "zod";
 
 export const CreateTier = z.object({
@@ -8,9 +9,9 @@ export const CreateTier = z.object({
 export type CreateTier = z.infer<typeof CreateTier>;
 
 export const Tier = z.object({
+  id: TierId,
   name: z.string(),
   qualificationThreshold: z.number(),
-  id: z.number(),
 });
 
 export type Tier = z.infer<typeof Tier>;

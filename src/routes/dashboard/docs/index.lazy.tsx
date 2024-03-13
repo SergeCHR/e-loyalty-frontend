@@ -20,7 +20,7 @@ const DocumentationPage = () => {
   //   role: "STORE",
   // });
   return (
-    <ScrollArea className="w-full h-screen bg-slate-50 pl-4">
+    <ScrollArea className="w-full h-screen pl-4">
       <h1 className="text-4xl bg-transparent mt-4">Documentation</h1>
       <p className="text-lg bg-transparent mt-4">
         This is the documentation page
@@ -28,15 +28,15 @@ const DocumentationPage = () => {
       <CodeBlock
         className="max-w-fit"
         text={`
-        import { Tier } from "@/api/models/tier";
-        import z from "zod";
+import { Tier } from "@/api/models/tier";
+import z from "zod";
 
-        export const TierBasedScheme = z.object({
-          isActive: z.boolean(),
-          tiers: z.array(Tier),
-        });
+export const TierBasedScheme = z.object({
+  isActive: z.boolean(),
+  tiers: z.array(Tier),
+});
 
-        export type TierBasedScheme = z.infer<typeof TierBasedScheme>;
+export type TierBasedScheme = z.infer<typeof TierBasedScheme>;
 `}
       />
     </ScrollArea>

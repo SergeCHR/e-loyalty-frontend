@@ -53,7 +53,7 @@ export const EditTierDialog = () => {
   function onSubmit(data: z.infer<typeof CreateTier>) {
     if (!editMode.tier) return;
     const newTier = {
-      id: editMode.tier.id.toString(),
+      id: editMode.tier.id,
       name: data.name,
       qualificationThreshold: parseInt(data.qualificationThreshold),
     };

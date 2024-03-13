@@ -29,7 +29,9 @@ import { Button } from "@/components/ui/button";
 import { CreateTier } from "@/api/models/tier";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
+import { TierId } from "@/api/branded-types";
 import { cn } from "@/lib/utils";
+import { faker } from "@faker-js/faker";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useTiersStore } from "@/store";
@@ -46,7 +48,17 @@ export function TierList() {
     setEditMode,
   } = useTiersStore();
 
-  const allTiers = [...defaultTiers, ...customTiers];
+  const stringifiedDefaultTiers = defaultTiers.map((tier) => ({
+    ...tier,
+    id: tier.id.toString(),
+  }));
+
+  const stringifiedCustomTiers = customTiers.map((tier) => ({
+    ...tier,
+    id: tier.id.toString(),
+  }));
+
+  const allTiers = [...stringifiedDefaultTiers, ...stringifiedCustomTiers];
 
   return (
     <div>
@@ -65,7 +77,7 @@ export function TierList() {
                 .filter((c) => value.includes(c.id))
                 .map((tier) => ({
                   ...tier,
-                  id: parseInt(tier.id),
+                  id: TierId.parse(parseInt(tier.id)),
                 }));
               setSelectedTiers(selectedTiers);
             }}
@@ -75,7 +87,7 @@ export function TierList() {
               Pre-created by system. You can use them or add your own!
             </p>
             <div className="flex flex-wrap gap-4 max-h-52 overflow-scroll scrollbar-hide border border-slate-300 p-4 rounded-lg">
-              {defaultTiers.map((tier) => (
+              {stringifiedDefaultTiers.map((tier) => (
                 <ToggleGroup.Item
                   key={tier.id}
                   value={tier.id}
@@ -88,7 +100,7 @@ export function TierList() {
                 >
                   <TierCard
                     tier={{
-                      id: parseInt(tier.id),
+                      id: TierId.parse(parseInt(tier.id)),
                       name: tier.name,
                       qualificationThreshold: tier.qualificationThreshold,
                     }}
@@ -102,12 +114,15 @@ export function TierList() {
               Here you can create, edit or delete your custom tiers.
             </p>
             <div className="flex flex-wrap gap-4 min-h-52 overflow-scroll scrollbar-hide border border-slate-300 p-4 rounded-lg">
-              {customTiers.map((tier) => (
+              {stringifiedCustomTiers.map((tier) => (
                 <TierCardContextMenu
                   onEditClicked={() =>
                     setEditMode({
                       isActive: true,
-                      tier,
+                      tier: {
+                        ...tier,
+                        id: TierId.parse(parseInt(tier.id)),
+                      },
                     })
                   }
                 >
@@ -125,7 +140,7 @@ export function TierList() {
                   >
                     <TierCard
                       tier={{
-                        id: parseInt(tier.id),
+                        id: TierId.parse(parseInt(tier.id)),
                         name: tier.name,
                         qualificationThreshold: tier.qualificationThreshold,
                       }}
@@ -165,8 +180,7 @@ const AddTierDialog = (props: AddTierDialogProps) => {
 
   function onSubmit(data: z.infer<typeof CreateTier>) {
     const newTier = {
-      //todo: id should be created by backend
-      id: Math.floor(Math.random() * 100).toString(),
+      id: TierId.parse(faker.number.int()),
       name: data.name,
       qualificationThreshold: parseInt(data.qualificationThreshold),
     };

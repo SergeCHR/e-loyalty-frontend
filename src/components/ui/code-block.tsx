@@ -1,6 +1,9 @@
-import { CopyBlock, atomOneDark } from "react-code-blocks";
+import { Copy, CopyCheck } from "lucide-react";
 
+import Highlight from "react-highlight";
+import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
 
 type CodeBlockProps = {
   className?: string;
@@ -9,23 +12,35 @@ type CodeBlockProps = {
 };
 
 export const CodeBlock = (props: CodeBlockProps) => {
+  const text = props.text.trim();
+  const [copied, setCopied] = useState(false);
   return (
-    <div className={props.className}>
-      <CopyBlock
-        text={props.text}
-        language={props.language ?? "typescript"}
-        showLineNumbers
-        customStyle={{
-          paddingRight: "24px",
-        }}
-        codeBlock
-        theme={atomOneDark}
-        onCopy={() => {
-          toast({
-            title: "Successfully copied! ✅",
-          });
-        }}
-      />
+    <div className={cn("relative", props.className)}>
+      <div className="absolute top-3 right-3">
+        {copied ? (
+          <CopyCheck className="text-green-500" />
+        ) : (
+          <Copy
+            onClick={() => {
+              navigator.clipboard.writeText(text);
+              setCopied(true);
+              toast({
+                title: "Successfully copied to clipboard ✅",
+              });
+              setTimeout(() => setCopied(false), 1500);
+            }}
+            className="text-white cursor-pointer"
+          />
+        )}
+      </div>
+      <Highlight
+        className="rounded-sm"
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        language="typescript"
+      >
+        {text}
+      </Highlight>
     </div>
   );
 };

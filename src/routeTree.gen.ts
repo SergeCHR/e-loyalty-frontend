@@ -23,6 +23,7 @@ const AuthTestLazyImport = createFileRoute('/auth/test')()
 const AuthResetPasswordLazyImport = createFileRoute('/auth/reset-password')()
 const AuthRegisterLazyImport = createFileRoute('/auth/register')()
 const AuthLoginLazyImport = createFileRoute('/auth/login')()
+const DashboardUsersIndexLazyImport = createFileRoute('/dashboard/users/')()
 const DashboardSettingsIndexLazyImport = createFileRoute(
   '/dashboard/settings/',
 )()
@@ -70,6 +71,13 @@ const AuthLoginLazyRoute = AuthLoginLazyImport.update({
   path: '/auth/login',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth/login.lazy').then((d) => d.Route))
+
+const DashboardUsersIndexLazyRoute = DashboardUsersIndexLazyImport.update({
+  path: '/dashboard/users/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/dashboard/users/index.lazy').then((d) => d.Route),
+)
 
 const DashboardSettingsIndexLazyRoute = DashboardSettingsIndexLazyImport.update(
   {
@@ -127,6 +135,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSettingsIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard/users/': {
+      preLoaderRoute: typeof DashboardUsersIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -142,6 +154,7 @@ export const routeTree = rootRoute.addChildren([
   DashboardIndexLazyRoute,
   DashboardDocsIndexLazyRoute,
   DashboardSettingsIndexLazyRoute,
+  DashboardUsersIndexLazyRoute,
 ])
 
 /* prettier-ignore-end */

@@ -1,3 +1,5 @@
+import { PointBasedLoyaltyCardPoints } from "@/api/models/point-based-loyalty-card";
+import { Tier } from "@/api/models/tier";
 import { UserId } from "@/api/branded-types";
 import z from "zod";
 
@@ -14,7 +16,6 @@ export const User = z.object({
   id: UserId,
   name: z.string(),
   email: z.string().email(),
-  passwordHash: z.string(),
   //TODO: maybe update to something more date-like
   dateRegistered: z.string(),
   userType: UserRole,
@@ -50,3 +51,11 @@ export const JwtUser = z.object({
   role: UserRole,
 });
 export type JwtUser = z.infer<typeof JwtUser>;
+
+export const StoreTableUser = User.merge(PointBasedLoyaltyCardPoints).merge(
+  z.object({
+    tier: Tier,
+  })
+);
+
+export type StoreTableUser = z.infer<typeof StoreTableUser>;

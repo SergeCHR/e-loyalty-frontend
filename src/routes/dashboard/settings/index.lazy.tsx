@@ -29,7 +29,7 @@ const SettingsPage = () => {
   //   role: "STORE",
   // });
   return (
-    <div className="w-full bg-slate-50 pl-4">
+    <div className="w-full pl-4">
       <h1 className="text-4xl bg-transparent mt-4">Your settings</h1>
       <p className="text-lg bg-transparent mt-4">
         Loyalty systems configuration

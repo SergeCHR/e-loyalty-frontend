@@ -19,14 +19,14 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export function TierBasedSchemeForm() {
+  const { isActive, selectedTiers, setIsActive } = useTiersStore();
+
   const form = useForm<z.infer<typeof UpdateTierBasedScheme>>({
     resolver: zodResolver(UpdateTierBasedScheme),
     defaultValues: {
-      isActive: false,
+      isActive,
     },
   });
-
-  const selectedTiers = useTiersStore((state) => state.selectedTiers);
 
   function onSubmit(data: z.infer<typeof UpdateTierBasedScheme>) {
     toast({
@@ -65,7 +65,10 @@ export function TierBasedSchemeForm() {
                   <FormControl>
                     <Switch
                       checked={field.value}
-                      onCheckedChange={field.onChange}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked);
+                        setIsActive(checked);
+                      }}
                     />
                   </FormControl>
                 </FormItem>

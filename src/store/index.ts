@@ -1,22 +1,19 @@
 import { Tier } from "@/api/models/tier";
+import { TierId } from "@/api/branded-types";
 import { create } from "zustand";
 
-type AppTier = {
-  id: string;
-  name: string;
-  qualificationThreshold: number;
-};
-
 type TiersState = {
+  isActive: boolean;
+  setIsActive: (value: boolean) => void;
   editMode: {
     isActive: boolean;
-    tier?: AppTier;
+    tier?: Tier;
   };
   setEditMode: (value: TiersState["editMode"]) => void;
-  defaultTiers: AppTier[];
-  customTiers: AppTier[];
-  setCustomTiers: (tier: AppTier[]) => void;
-  editTier: (id: string, newTier: AppTier) => void;
+  defaultTiers: Tier[];
+  customTiers: Tier[];
+  setCustomTiers: (tier: Tier[]) => void;
+  editTier: (id: TierId, newTier: Tier) => void;
   selectedValues: string[];
   selectedTiers: Tier[];
   setSelectedValues: (value: string[]) => void;
@@ -24,11 +21,13 @@ type TiersState = {
 };
 
 export const useTiersStore = create<TiersState>((set) => ({
+  isActive: false,
+  setIsActive: (value) => set({ isActive: value }),
   //retrieve from tanstack;
   defaultTiers: [
-    { id: "1", name: "Silver", qualificationThreshold: 0 },
-    { id: "2", name: "Gold", qualificationThreshold: 200 },
-    { id: "3", name: "Platinum", qualificationThreshold: 500 },
+    { id: TierId.parse(1), name: "Silver", qualificationThreshold: 0 },
+    { id: TierId.parse(2), name: "Gold", qualificationThreshold: 200 },
+    { id: TierId.parse(3), name: "Platinum", qualificationThreshold: 500 },
   ],
   customTiers: [],
   editMode: {
