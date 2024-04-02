@@ -1,4 +1,4 @@
-import { ArrowUpDown, Copy, EyeIcon } from "lucide-react";
+import { ArrowUpDown, Copy } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,51 +20,78 @@ import { User as UserIcon } from "lucide-react";
 
 export const columns: ColumnDef<StoreTableUser>[] = [
   {
-    accessorKey: "isVerified",
-    header: "Verified Status",
+    accessorKey: "id",
+    header: "ID",
   },
   {
-    accessorKey: "email",
+    id: "avatar",
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <img className="w-8 h-8 min-w-8 rounded-full" src={user.imageUrl} />
+      );
+    },
+  },
+  {
+    accessorKey: "fullName",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          User
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          User name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "location",
+    header: "Location",
   },
   {
     accessorKey: "availablePointAmount",
-    header: "Available Points",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Available Points
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user = row.original;
+      return <span className="block text-center">{user.idlePointAmount}</span>;
+    },
   },
   {
     accessorKey: "idlePointAmount",
-    header: "Idle Points",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Idle Points
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user = row.original;
+      return <span className="block text-center">{user.idlePointAmount}</span>;
+    },
   },
   {
     accessorKey: "tier",
     header: "Tier Name",
     cell: ({ row }) => {
       const user = row.original;
-      return <span>{user.tier.name}</span>;
+      return <span>{user.tier?.name}</span>;
     },
   },
   {
@@ -83,16 +110,13 @@ export const columns: ColumnDef<StoreTableUser>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.email)}
+              //todo: add email to schema and write it here
+              onClick={() => navigator.clipboard.writeText(user.id.toString())}
             >
               <Copy className="mr-2 h-4 w-4" />
-              <span>Copy user email</span>
+              <span>Copy user ID</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <EyeIcon className="mr-2 h-4 w-4" />
-              <span>View customer</span>
-            </DropdownMenuItem>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
                 <UserIcon className="mr-2 h-4 w-4" />

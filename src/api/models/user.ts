@@ -1,3 +1,4 @@
+import { CustomerAccount } from "@/api/models/customer-account";
 import { PointBasedLoyaltyCardPoints } from "@/api/models/point-based-loyalty-card";
 import { Tier } from "@/api/models/tier";
 import { UserId } from "@/api/branded-types";
@@ -52,10 +53,12 @@ export const JwtUser = z.object({
 });
 export type JwtUser = z.infer<typeof JwtUser>;
 
-export const StoreTableUser = User.merge(PointBasedLoyaltyCardPoints).merge(
-  z.object({
-    tier: Tier,
-  })
-);
+export const StoreTableUser = PointBasedLoyaltyCardPoints.partial()
+  .merge(CustomerAccount)
+  .merge(
+    z.object({
+      tier: Tier.optional(),
+    })
+  );
 
 export type StoreTableUser = z.infer<typeof StoreTableUser>;

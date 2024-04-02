@@ -1,16 +1,17 @@
-import { TierId, UserId } from "@/api/branded-types";
+import { CustomerAccountId, TierId, Url, UserId } from "@/api/branded-types";
 
 import { StoreTableUser } from "@/api/models/user";
 import { Tier } from "@/api/models/tier";
 import { faker } from "@faker-js/faker";
 
 export const generateFakeStoreTableUser = (): StoreTableUser => ({
-  id: UserId.parse(faker.number.int()),
-  dateRegistered: faker.date.past().toISOString(),
-  email: faker.internet.email(),
-  isVerified: faker.datatype.boolean(),
-  name: faker.person.fullName(),
-  userType: "USER",
+  id: CustomerAccountId.parse(faker.number.int()),
+  birthday: faker.date.birthdate().toISOString(),
+  fullName: faker.person.fullName(),
+  gender: Math.random() > 0.5 ? "Male" : "Female",
+  imageUrl: Url.parse(faker.image.avatar()),
+  location: faker.location.city(),
+  userId: UserId.parse(faker.number.int()),
   availablePointAmount: faker.number.int({ min: 0, max: 100000 }),
   idlePointAmount: faker.number.int({ min: 0, max: 100000 }),
   tier: generateFakeTier(),

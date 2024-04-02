@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { BlurredBlock } from "@/components/ui/blurred-block";
 import { PointBasedSchemaForm } from "@/pages/settings-page/point-based-form";
 import { SideNavigation } from "@/components/dashboard/side-navigation";
 import { TierBasedSchemeForm } from "@/pages/settings-page/tier-based-form";
@@ -67,6 +68,11 @@ const SettingsPage = () => {
           </Card>
         </TabsContent>
       </Tabs>
+      <p className="text-lg bg-transparent mt-8">Your api key</p>
+      <BlurredBlock className="text-black w-96 mt-2">
+        onrast#)aornstoiecaorinstoi
+      </BlurredBlock>
+      <div className="w-full pb-64" />
     </div>
   );
 };
