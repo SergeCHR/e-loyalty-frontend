@@ -11,8 +11,6 @@ export const useProtected = (props: UseProtected) => {
   const navigate = useNavigate();
   const user = useAuthUser<JwtUser>();
 
-  console.log({ user });
-
   if (!user) {
     return navigate({ to: "/auth/login" });
   }

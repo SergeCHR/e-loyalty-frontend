@@ -17,7 +17,7 @@ import { createFileRoute } from "@tanstack/react-router";
 // import { useProtected } from "@/services/auth/useProtected";
 
 export const Route = createFileRoute("/dashboard/settings/")({
-  // beforeLoad: protectRouteWithRole("STORE"),
+  // beforeLoad: protectRouteWithRole("BUSINESS"),
   component: () => (
     <SideNavigation>
       <SettingsPage />
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/dashboard/settings/")({
 
 const SettingsPage = () => {
   // useProtected({
-  //   role: "STORE",
+  //   role: "BUSINESS",
   // });
   return (
     <div className="w-full pl-4">

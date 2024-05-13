@@ -17,5 +17,5 @@ export const userDetailsSchema = z
   });
 
 export const accountTypeSchema = z.object({
-  role: z.enum(["USER", "STORE"]),
+  role: z.enum(["USER", "BUSINESS"]),
 });

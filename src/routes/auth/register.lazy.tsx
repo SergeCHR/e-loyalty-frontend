@@ -24,6 +24,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { CreateUser } from "@/api/models/user";
 import { Input } from "@/components/ui/input";
+import { Logo } from "@/components/branding/logo";
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "@/components/ui/use-toast";
@@ -82,6 +83,9 @@ export function RegisterPage() {
   };
   return (
     <div className="bg-noisy bg-primary w-screen h-screen">
+      <Link to="/">
+        <Logo className="absolute top-4 left-6"/>
+      </Link>
       <MainContentWrapper>
         <Form {...form}>
           <form
@@ -205,7 +209,7 @@ export function RegisterPage() {
                                 </FormItem>
                                 <FormItem className="flex items-center space-x-3 space-y-0">
                                   <FormControl>
-                                    <RadioGroupItem value="STORE" />
+                                    <RadioGroupItem value="BUSINESS" />
                                   </FormControl>
                                   <FormLabel className="font-normal">
                                     own a loyalty system

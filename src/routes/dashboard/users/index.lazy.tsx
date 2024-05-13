@@ -3,15 +3,15 @@ import { SideNavigation } from "@/components/dashboard/side-navigation";
 import { columns } from "@/pages/dashboard-users-page/data";
 import { createFileRoute } from "@tanstack/react-router";
 import { fill } from "@/lib/array";
-import { generateFakeStoreTableUser } from "@/lib/fake-data";
+import { generateFakeBusinessTableUser } from "@/lib/fake-data";
 
 // import { protectRouteWithRole } from "@/lib/routing";
 // import { useProtected } from "@/services/auth/useProtected";
 
-const fakeStoreTableUsers = fill(50, generateFakeStoreTableUser);
+const fakeBusinessTableUsers = fill(50, generateFakeBusinessTableUser);
 
 export const Route = createFileRoute("/dashboard/users/")({
-  // beforeLoad: protectRouteWithRole("STORE"),
+  // beforeLoad: protectRouteWithRole("BUSINESS"),
   component: () => (
     <SideNavigation>
       <DashboardUsersPage />
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/dashboard/users/")({
 
 const DashboardUsersPage = () => {
   // useProtected({
-  //   role: "STORE",
+  //   role: "BUSINESS",
   // });
   return (
     <div className="w-full pl-4">
@@ -32,7 +32,7 @@ const DashboardUsersPage = () => {
       <DataTable
         className="mr-4 mt-8"
         columns={columns}
-        data={fakeStoreTableUsers}
+        data={fakeBusinessTableUsers}
       />
     </div>
   );

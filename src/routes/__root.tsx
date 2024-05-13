@@ -6,7 +6,8 @@ import {
 
 import { JwtUser } from "@/api/models/user";
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+
+// import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 type AuthenticationContext = {
   user: JwtUser | null | undefined;
@@ -59,7 +60,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <>
       <Outlet />
-      <TanStackRouterDevtools />
+      {/* <TanStackRouterDevtools /> */}
     </>
   ),
 });

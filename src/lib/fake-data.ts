@@ -1,10 +1,10 @@
 import { CustomerAccountId, TierId, Url, UserId } from "@/api/branded-types";
 
-import { StoreTableUser } from "@/api/models/user";
+import { BusinessTableUser } from "@/api/models/user";
 import { Tier } from "@/api/models/tier";
 import { faker } from "@faker-js/faker";
 
-export const generateFakeStoreTableUser = (): StoreTableUser => ({
+export const generateFakeBusinessTableUser = (): BusinessTableUser => ({
   id: CustomerAccountId.parse(faker.number.int()),
   birthday: faker.date.birthdate().toISOString(),
   fullName: faker.person.fullName(),

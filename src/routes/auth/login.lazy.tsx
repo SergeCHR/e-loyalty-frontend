@@ -18,6 +18,7 @@ import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Logo } from "@/components/branding/logo";
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "@/components/ui/use-toast";
@@ -68,7 +69,10 @@ export function LoginPage() {
   };
 
   return (
-    <div className="bg-noisy bg-primary w-screen h-screen">
+    <div className="bg-noisy bg-primary w-screen h-screen relative">
+      <Link to="/">
+        <Logo className="absolute top-4 left-6"/>
+      </Link>
       <MainContentWrapper>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

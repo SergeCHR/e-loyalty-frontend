@@ -2,6 +2,7 @@ import { BookText, LayoutDashboard, Settings, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
+import { Logo } from "../branding/logo";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 type SideNavigationProps = {
@@ -12,13 +13,8 @@ export const SideNavigation = (props: SideNavigationProps) => {
   return (
     <div className="relative h-screen w-screen">
       <ScrollArea className="bg-green-400 bg-noisy fixed left-0 h-full w-56 overflow-y-hidden">
-        <Link
-          className="bg-white rounded-lg py-4 px-2 w-50 m-2 flex items-center"
-          to="/"
-        >
-          <p className="text-lg w-full text-center">
-            <span className="text-green-600 font-bold">e</span>Loyalty
-          </p>
+        <Link to="/">
+          <Logo className="p-4 px-6"/>
         </Link>
         <div className="relative top-10 p-4 rounded-lg flex flex-col gap-3 w-full">
           <Button variant="ghost" className="flex justify-start" asChild>

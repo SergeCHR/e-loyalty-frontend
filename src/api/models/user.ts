@@ -4,13 +4,13 @@ import { Tier } from "@/api/models/tier";
 import { UserId } from "@/api/branded-types";
 import z from "zod";
 
-export const UserRole = z.enum(["ADMIN", "USER", "STORE", "MANAGER"]);
+export const UserRole = z.enum(["ADMIN", "USER", "BUSINESS", "MANAGER"]);
 export type UserRole = z.infer<typeof UserRole>;
 
 export const RestrictedUserRole = z.enum(["ADMIN", "MANAGER"]);
 export type RestrictedUserRole = z.infer<typeof RestrictedUserRole>;
 
-export const RegularUserRole = z.enum(["USER", "STORE"]);
+export const RegularUserRole = z.enum(["USER", "BUSINESS"]);
 export type RegularUserRole = z.infer<typeof RegularUserRole>;
 
 export const User = z.object({
@@ -53,7 +53,7 @@ export const JwtUser = z.object({
 });
 export type JwtUser = z.infer<typeof JwtUser>;
 
-export const StoreTableUser = PointBasedLoyaltyCardPoints.partial()
+export const BusinessTableUser = PointBasedLoyaltyCardPoints.partial()
   .merge(CustomerAccount)
   .merge(
     z.object({
@@ -61,4 +61,4 @@ export const StoreTableUser = PointBasedLoyaltyCardPoints.partial()
     })
   );
 
-export type StoreTableUser = z.infer<typeof StoreTableUser>;
+export type BusinessTableUser = z.infer<typeof BusinessTableUser>;

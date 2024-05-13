@@ -9,11 +9,11 @@ export type UserId = z.infer<typeof UserId>;
 export const CustomerAccountId = z.number().brand("CustomerAccountId");
 export type CustomerAccountId = z.infer<typeof CustomerAccountId>;
 
-export const StoreAccountId = z.number().brand("StoreAccountId");
-export type StoreAccountId = z.infer<typeof StoreAccountId>;
+export const BusinessAccountId = z.number().brand("BusinessAccountId");
+export type BusinessAccountId = z.infer<typeof BusinessAccountId>;
 
-export const StoreId = z.number().brand("StoreId");
-export type StoreId = z.infer<typeof StoreId>;
+export const BusinessId = z.number().brand("BusinessId");
+export type BusinessId = z.infer<typeof BusinessId>;
 
 export const BonusTransactionId = z.number().brand("BonusTransactionId");
 export type BonusTransactionId = z.infer<typeof BonusTransactionId>;

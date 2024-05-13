@@ -11,14 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { BusinessTableUser } from "@/api/models/user";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { DropdownMenuPortal } from "@radix-ui/react-dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { StoreTableUser } from "@/api/models/user";
 import { User as UserIcon } from "lucide-react";
 
-export const columns: ColumnDef<StoreTableUser>[] = [
+export const columns: ColumnDef<BusinessTableUser>[] = [
   {
     accessorKey: "id",
     header: "ID",

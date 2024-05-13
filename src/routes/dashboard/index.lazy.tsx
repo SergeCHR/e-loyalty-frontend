@@ -7,7 +7,7 @@ import { SideNavigation } from "@/components/dashboard/side-navigation";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 export const Route = createFileRoute("/dashboard/")({
-  // beforeLoad: protectRouteWithRole("STORE"),
+  // beforeLoad: protectRouteWithRole("BUSINESS"),
   component: () => (
     <SideNavigation>
       <DashboardPage />
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/dashboard/")({
 
 const DashboardPage = () => {
   // useProtected({
-  //   role: "STORE",
+  //   role: "BUSINESS",
   // });
   const navigate = useNavigate();
   const signOut = useSignOut();
