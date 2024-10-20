@@ -27,7 +27,6 @@ import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/branding/logo";
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { toast } from "@/components/ui/use-toast";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
@@ -46,10 +45,11 @@ export function RegisterPage() {
       navigate({ to: "/auth/login" });
     },
     onError: () => {
-      toast({
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
-      });
+      navigate({ to: "/auth/login" });
+      // toast({
+      //   title: "Uh oh! Something went wrong.",
+      //   description: "There was a problem with your request.",
+      // });
     },
   });
   const [currentStep, setCurrentStep] = useState(1);
@@ -69,16 +69,6 @@ export function RegisterPage() {
       setCurrentStep(currentStep + 1);
     } else {
       mutate(createUserData);
-      toast({
-        title: "You submitted the following values:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">
-              {JSON.stringify(createUserData, null, 2)}
-            </code>
-          </pre>
-        ),
-      });
     }
   };
   return (

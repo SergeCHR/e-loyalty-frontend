@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { BlurredBlock } from "@/components/ui/blurred-block";
+import { CopyTextBlock } from "@/components/ui/copy-text-block";
 import { PointBasedSchemaForm } from "@/pages/settings-page/point-based-form";
 import { SideNavigation } from "@/components/dashboard/side-navigation";
 import { TierBasedSchemeForm } from "@/pages/settings-page/tier-based-form";
@@ -16,7 +16,7 @@ import { createFileRoute } from "@tanstack/react-router";
 // import { protectRouteWithRole } from "@/lib/routing";
 // import { useProtected } from "@/services/auth/useProtected";
 
-export const Route = createFileRoute("/dashboard/settings/")({
+export const Route = createFileRoute("/dashboard/loyalty-system-settings/")({
   // beforeLoad: protectRouteWithRole("BUSINESS"),
   component: () => (
     <SideNavigation>
@@ -69,9 +69,7 @@ const SettingsPage = () => {
         </TabsContent>
       </Tabs>
       <p className="text-lg bg-transparent mt-8">Your api key</p>
-      <BlurredBlock className="text-black w-96 mt-2">
-        onrast#)aornstoiecaorinstoi
-      </BlurredBlock>
+      <CopyTextBlock>1125b15b145-1ce1f3-4e1114-a1ecd-13a81d91d5141a1c1bc</CopyTextBlock>
       <div className="w-full pb-64" />
     </div>
   );

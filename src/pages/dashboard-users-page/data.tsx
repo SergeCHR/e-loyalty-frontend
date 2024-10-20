@@ -23,15 +23,15 @@ export const columns: ColumnDef<BusinessTableUser>[] = [
     accessorKey: "id",
     header: "ID",
   },
-  {
-    id: "avatar",
-    cell: ({ row }) => {
-      const user = row.original;
-      return (
-        <img className="w-8 h-8 min-w-8 rounded-full" src={user.imageUrl} />
-      );
-    },
-  },
+  // {
+  //   id: "avatar",
+  //   cell: ({ row }) => {
+  //     const user = row.original;
+  //     return (
+  //       <img className="w-8 h-8 min-w-8 rounded-full" src={user.imageUrl} />
+  //     );
+  //   },
+  // },
   {
     accessorKey: "fullName",
     header: ({ column }) => {
@@ -45,10 +45,6 @@ export const columns: ColumnDef<BusinessTableUser>[] = [
         </Button>
       );
     },
-  },
-  {
-    accessorKey: "location",
-    header: "Location",
   },
   {
     accessorKey: "availablePointAmount",
@@ -65,25 +61,7 @@ export const columns: ColumnDef<BusinessTableUser>[] = [
     },
     cell: ({ row }) => {
       const user = row.original;
-      return <span className="block text-center">{user.idlePointAmount}</span>;
-    },
-  },
-  {
-    accessorKey: "idlePointAmount",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Idle Points
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const user = row.original;
-      return <span className="block text-center">{user.idlePointAmount}</span>;
+      return <span className="block ml-16">{user.availablePointAmount}</span>;
     },
   },
   {

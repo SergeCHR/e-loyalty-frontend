@@ -8,12 +8,14 @@ import {
 } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { TierList } from "@/pages/settings-page/tier-list";
 import { UpdateTierBasedScheme } from "@/api/models/tier-based-scheme";
 import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useTiersStore } from "@/store";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +29,8 @@ export function TierBasedSchemeForm() {
       isActive,
     },
   });
+
+  const [isLoading, setIsLoading] = useState(false)
 
   function onSubmit(data: z.infer<typeof UpdateTierBasedScheme>) {
     toast({
@@ -75,7 +79,6 @@ export function TierBasedSchemeForm() {
               )}
             />
           </div>
-          <Button type="submit">Update</Button>
         </form>
       </Form>
       <div
@@ -86,6 +89,13 @@ export function TierBasedSchemeForm() {
         )}
       >
         <TierList />
+        <Button className="mt-4" onClick={() => {
+          setIsLoading(true)
+          setTimeout(() => setIsLoading(false), 250)
+        }} disabled={isLoading}>{isLoading ? <>
+        <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+        Please wait
+        </> : "Update"}</Button>
       </div>
     </>
   );

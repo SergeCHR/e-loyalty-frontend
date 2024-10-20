@@ -13,21 +13,35 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AuthLoginPasswordImport } from './routes/auth/login-password'
 
 // Create Virtual Routes
 
 const NotAuthenticatedLazyImport = createFileRoute('/not-authenticated')()
 const IndexLazyImport = createFileRoute('/')()
-const DashboardIndexLazyImport = createFileRoute('/dashboard/')()
-const AuthTestLazyImport = createFileRoute('/auth/test')()
+const ClientsIndexLazyImport = createFileRoute('/clients/')()
+const AuthVerifyLazyImport = createFileRoute('/auth/verify')()
 const AuthResetPasswordLazyImport = createFileRoute('/auth/reset-password')()
 const AuthRegisterLazyImport = createFileRoute('/auth/register')()
 const AuthLoginLazyImport = createFileRoute('/auth/login')()
+const AuthFinishRegistrationLazyImport = createFileRoute(
+  '/auth/finish-registration',
+)()
 const DashboardUsersIndexLazyImport = createFileRoute('/dashboard/users/')()
-const DashboardSettingsIndexLazyImport = createFileRoute(
-  '/dashboard/settings/',
+const DashboardPersonalizationSettingsIndexLazyImport = createFileRoute(
+  '/dashboard/personalization-settings/',
+)()
+const DashboardNotificationSettingsIndexLazyImport = createFileRoute(
+  '/dashboard/notification-settings/',
+)()
+const DashboardLoyaltySystemSettingsIndexLazyImport = createFileRoute(
+  '/dashboard/loyalty-system-settings/',
 )()
 const DashboardDocsIndexLazyImport = createFileRoute('/dashboard/docs/')()
+const ClientsSettingsIndexLazyImport = createFileRoute('/clients/settings/')()
+const ClientsLoyaltyCardIdIndexLazyImport = createFileRoute(
+  '/clients/$loyaltyCardId/',
+)()
 
 // Create/Update Routes
 
@@ -43,17 +57,15 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const DashboardIndexLazyRoute = DashboardIndexLazyImport.update({
-  path: '/dashboard/',
+const ClientsIndexLazyRoute = ClientsIndexLazyImport.update({
+  path: '/clients/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/dashboard/index.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./routes/clients/index.lazy').then((d) => d.Route))
 
-const AuthTestLazyRoute = AuthTestLazyImport.update({
-  path: '/auth/test',
+const AuthVerifyLazyRoute = AuthVerifyLazyImport.update({
+  path: '/auth/verify',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/auth/test.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/auth/verify.lazy').then((d) => d.Route))
 
 const AuthResetPasswordLazyRoute = AuthResetPasswordLazyImport.update({
   path: '/auth/reset-password',
@@ -72,6 +84,20 @@ const AuthLoginLazyRoute = AuthLoginLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth/login.lazy').then((d) => d.Route))
 
+const AuthFinishRegistrationLazyRoute = AuthFinishRegistrationLazyImport.update(
+  {
+    path: '/auth/finish-registration',
+    getParentRoute: () => rootRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/auth/finish-registration.lazy').then((d) => d.Route),
+)
+
+const AuthLoginPasswordRoute = AuthLoginPasswordImport.update({
+  path: '/auth/login-password',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DashboardUsersIndexLazyRoute = DashboardUsersIndexLazyImport.update({
   path: '/dashboard/users/',
   getParentRoute: () => rootRoute,
@@ -79,14 +105,35 @@ const DashboardUsersIndexLazyRoute = DashboardUsersIndexLazyImport.update({
   import('./routes/dashboard/users/index.lazy').then((d) => d.Route),
 )
 
-const DashboardSettingsIndexLazyRoute = DashboardSettingsIndexLazyImport.update(
-  {
-    path: '/dashboard/settings/',
+const DashboardPersonalizationSettingsIndexLazyRoute =
+  DashboardPersonalizationSettingsIndexLazyImport.update({
+    path: '/dashboard/personalization-settings/',
     getParentRoute: () => rootRoute,
-  } as any,
-).lazy(() =>
-  import('./routes/dashboard/settings/index.lazy').then((d) => d.Route),
-)
+  } as any).lazy(() =>
+    import('./routes/dashboard/personalization-settings/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const DashboardNotificationSettingsIndexLazyRoute =
+  DashboardNotificationSettingsIndexLazyImport.update({
+    path: '/dashboard/notification-settings/',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/notification-settings/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const DashboardLoyaltySystemSettingsIndexLazyRoute =
+  DashboardLoyaltySystemSettingsIndexLazyImport.update({
+    path: '/dashboard/loyalty-system-settings/',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/loyalty-system-settings/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
 const DashboardDocsIndexLazyRoute = DashboardDocsIndexLazyImport.update({
   path: '/dashboard/docs/',
@@ -94,6 +141,21 @@ const DashboardDocsIndexLazyRoute = DashboardDocsIndexLazyImport.update({
 } as any).lazy(() =>
   import('./routes/dashboard/docs/index.lazy').then((d) => d.Route),
 )
+
+const ClientsSettingsIndexLazyRoute = ClientsSettingsIndexLazyImport.update({
+  path: '/clients/settings/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/clients/settings/index.lazy').then((d) => d.Route),
+)
+
+const ClientsLoyaltyCardIdIndexLazyRoute =
+  ClientsLoyaltyCardIdIndexLazyImport.update({
+    path: '/clients/$loyaltyCardId/',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/clients/$loyaltyCardId/index.lazy').then((d) => d.Route),
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -105,6 +167,14 @@ declare module '@tanstack/react-router' {
     }
     '/not-authenticated': {
       preLoaderRoute: typeof NotAuthenticatedLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/login-password': {
+      preLoaderRoute: typeof AuthLoginPasswordImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/finish-registration': {
+      preLoaderRoute: typeof AuthFinishRegistrationLazyImport
       parentRoute: typeof rootRoute
     }
     '/auth/login': {
@@ -119,20 +189,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthResetPasswordLazyImport
       parentRoute: typeof rootRoute
     }
-    '/auth/test': {
-      preLoaderRoute: typeof AuthTestLazyImport
+    '/auth/verify': {
+      preLoaderRoute: typeof AuthVerifyLazyImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard/': {
-      preLoaderRoute: typeof DashboardIndexLazyImport
+    '/clients/': {
+      preLoaderRoute: typeof ClientsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/clients/$loyaltyCardId/': {
+      preLoaderRoute: typeof ClientsLoyaltyCardIdIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/clients/settings/': {
+      preLoaderRoute: typeof ClientsSettingsIndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/docs/': {
       preLoaderRoute: typeof DashboardDocsIndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard/settings/': {
-      preLoaderRoute: typeof DashboardSettingsIndexLazyImport
+    '/dashboard/loyalty-system-settings/': {
+      preLoaderRoute: typeof DashboardLoyaltySystemSettingsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/notification-settings/': {
+      preLoaderRoute: typeof DashboardNotificationSettingsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/personalization-settings/': {
+      preLoaderRoute: typeof DashboardPersonalizationSettingsIndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/users/': {
@@ -147,13 +233,19 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   NotAuthenticatedLazyRoute,
+  AuthLoginPasswordRoute,
+  AuthFinishRegistrationLazyRoute,
   AuthLoginLazyRoute,
   AuthRegisterLazyRoute,
   AuthResetPasswordLazyRoute,
-  AuthTestLazyRoute,
-  DashboardIndexLazyRoute,
+  AuthVerifyLazyRoute,
+  ClientsIndexLazyRoute,
+  ClientsLoyaltyCardIdIndexLazyRoute,
+  ClientsSettingsIndexLazyRoute,
   DashboardDocsIndexLazyRoute,
-  DashboardSettingsIndexLazyRoute,
+  DashboardLoyaltySystemSettingsIndexLazyRoute,
+  DashboardNotificationSettingsIndexLazyRoute,
+  DashboardPersonalizationSettingsIndexLazyRoute,
   DashboardUsersIndexLazyRoute,
 ])
 

@@ -10,11 +10,13 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
 import { PointBasedScheme } from "@/api/models/point-based-scheme";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -22,9 +24,9 @@ export function PointBasedSchemaForm() {
   const form = useForm<z.infer<typeof PointBasedScheme>>({
     resolver: zodResolver(PointBasedScheme),
     defaultValues: {
-      isActive: false,
-      pointsAccrualRate: 0,
-      pointsRedemptionRate: 0,
+      isActive: true,
+      pointsAccrualRate: 0.1,
+      pointsRedemptionRate: 0.2,
     },
   });
 
@@ -38,6 +40,8 @@ export function PointBasedSchemaForm() {
       ),
     });
   }
+
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Form {...form}>
@@ -99,7 +103,13 @@ export function PointBasedSchemaForm() {
             />
           </div>
         </div>
-        <Button type="submit">Update</Button>
+        <Button onClick={() => {
+          setIsLoading(true)
+          setTimeout(() => setIsLoading(false), 250)
+        }} disabled={isLoading}>{isLoading ? <>
+        <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+        Please wait
+        </> : "Update"}</Button>
       </form>
     </Form>
   );

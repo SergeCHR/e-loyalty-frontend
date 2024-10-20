@@ -40,8 +40,21 @@ export const CreateUser = z
 
 export type CreateUser = z.infer<typeof CreateUser>;
 
+export const CreatePreRegisteredUser = z
+  .object({
+    name: z.string().min(1, "Username is required"),
+    password: z.string().min(8, "Password must be at least 8 characters long"),
+    confirmPassword: z.string().min(8, "Confirmation is required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export type CreatePreRegisteredUser = z.infer<typeof CreatePreRegisteredUser>;
+
 export const LoginUser = z.object({
-  email: z.string().email(),
+  email: z.string(),
   password: z.string().min(8, "Password must be at least 8 characters long"),
 });
 export type LoginUser = z.infer<typeof LoginUser>;

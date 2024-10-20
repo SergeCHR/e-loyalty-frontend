@@ -11,4 +11,8 @@ export const Logo: FC<LogoModel> = model => {
         <HeartHandshake className="w-8 h-8"/>
         <p>eLoyalty</p>
     </div>
-}
+};
+
+export const LogoIcon: FC<LogoModel> = model => (
+    <HeartHandshake className={cn("w-8 h-8 text-black", model.className)}/>
+)

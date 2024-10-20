@@ -13,19 +13,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { JwtUser, LoginUser } from "@/api/models/user";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LoginUser } from "@/api/models/user";
 import { Logo } from "@/components/branding/logo";
 import { MainContentWrapper } from "@/components/wrappers/main-content-wrapper";
-import { jwtDecode } from "jwt-decode";
-import { toast } from "@/components/ui/use-toast";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import useSignIn from "react-auth-kit/hooks/useSignIn";
-import { userApiClient } from "@/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export const Route = createFileRoute("/auth/login")({
@@ -33,29 +29,16 @@ export const Route = createFileRoute("/auth/login")({
 });
 
 export function LoginPage() {
-  const signIn = useSignIn<JwtUser>();
   const navigate = useNavigate();
   const { mutate } = useMutation({
-    mutationFn: userApiClient.login,
-    onSuccess(loginData) {
-      const userState = jwtDecode<JwtUser>(loginData.accessToken);
-      if (
-        signIn({
-          auth: {
-            token: loginData.accessToken,
-            type: "Bearer",
-          },
-          userState,
-        })
-      ) {
-        navigate({ to: "/dashboard" });
-      }
+    mutationFn: async () => {
+     
+    },
+    onSuccess() {
+      form.getValues().email === "scherneha94@gmail.com" ? navigate({to: "/auth/verify"}) : navigate({to: "/auth/login-password"})
     },
     onError: () => {
-      toast({
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
-      });
+      form.getValues().email === "scherneha94@gmail.com" ? navigate({to: "/auth/verify"}) : navigate({to: "/auth/login-password"})
     },
   });
 
@@ -64,10 +47,6 @@ export function LoginPage() {
     resolver: zodResolver(LoginUser),
   });
 
-  const onSubmit = (loginUserData: LoginUser) => {
-    mutate(loginUserData);
-  };
-
   return (
     <div className="bg-noisy bg-primary w-screen h-screen relative">
       <Link to="/">
@@ -75,8 +54,8 @@ export function LoginPage() {
       </Link>
       <MainContentWrapper>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <Card className="mx-auto max-w-sm">
+          <form >
+            <Card className="mx-auto max-w-xl">
               <CardHeader className="space-y-1">
                 <CardTitle className="text-2xl font-bold">Login</CardTitle>
                 <CardDescription>
@@ -94,6 +73,7 @@ export function LoginPage() {
                           <FormLabel>Username</FormLabel>
                           <FormControl>
                             <Input
+                            autoComplete="off"
                               placeholder="m@example.com"
                               type="email"
                               {...field}
@@ -104,7 +84,7 @@ export function LoginPage() {
                       )}
                     />
                   </div>
-                  <div className="space-y-2">
+                  {/* <div className="space-y-2">
                     <FormField
                       control={form.control}
                       name="password"
@@ -130,9 +110,9 @@ export function LoginPage() {
                         </FormItem>
                       )}
                     />
-                  </div>
-                  <Button className="w-full" type="submit">
-                    Login
+                  </div> */}
+                  <Button onClick={() => mutate()} className="w-full">
+                    Continue
                   </Button>
                 </div>
                 <div className="mt-4 text-center text-sm">
